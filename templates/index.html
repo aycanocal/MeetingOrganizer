@@ -1,0 +1,113 @@
+{% extends "bootstrap/base.html" %}
+
+{% block title %} Meeting Organizer {% endblock %}
+
+{% block content %}
+
+<h1> Meetings </h1>
+
+<table class="table table-striped">
+  <tr>
+    <th>Topic</th>
+    <th>Date</th>
+    <th>Start Hour</th>
+    <th>Finish Hour</th>
+    <th>Participants</th>
+    <th>Actions</th>
+  </tr>
+  {% for row in meetings %}
+  <tr>
+    <td>{{row.topic}}</td>
+    <td>{{row.date}}</td>
+    <td>{{row.startHour}}</td>
+    <td>{{row.finishHour}}</td>
+    <td>{{row.participants}}</td>
+    <td>
+      <a href="/update/{{row.id}}" class="btn btn-warning btn-xs" data-toggle="modal" data-target="#editModal{{row.id}}">Edit</a>
+      <a href="/delete/{{row.id}}" class="btn btn-danger btn-xs" onclick="">Delete</a>
+    </td>
+  </tr>
+
+  <!-- Edit Modal -->
+<div class="modal fade" id="editModal{{row.id}}" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">Edit Meeting</h4>
+      </div>
+      <div class="modal-body">
+        <form action="{{url_for('update')}}" method="post">
+
+          <input type="hidden" name="id" value="{{row.id}}"><br>
+
+          <label>Topic:</label><br>
+          <input type="text" name="topic" value="{{row.topic}}"><br>
+
+          <label>Date:</label><br>
+          <input type="date" name="date" value="{{row.date}}"><br>
+
+          <label>Start Hour:</label><br>
+          <input type="time" name="startHour" value="{{row.startHour}}"><br>
+
+          <label>Finish Hour:</label><br>
+          <input type="time" name="finishHour" value="{{row.finishHour}}"><br>
+
+          <label>Participants:</label><br>
+          <input type="text" name="participants" value="{{row.participants}}"><br><br>
+
+          <button type="submit" class="btn btn-primary">Update</button>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+  {% endfor %}
+</table>
+
+<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addModal">
+  Add New Meeting
+</button>
+
+<!-- Add Modal -->
+<div class="modal fade" id="addModal" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">Add New Meeting</h4>
+      </div>
+      <div class="modal-body">
+        <form action="{{url_for('add')}}" method="post">
+
+          <label>Topic:</label><br>
+          <input type="text" name="topic"><br>
+
+          <label>Date:</label><br>
+          <input type="date" name="date"><br>
+
+          <label>Start Hour:</label><br>
+          <input type="time" name="startHour"><br>
+
+          <label>Finish Hour:</label><br>
+          <input type="time" name="finishHour"><br>
+
+          <label>Participants:</label><br>
+          <input type="text" name="participants"><br><br>
+
+          <button type="submit" class="btn btn-primary">Add</button>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+{% endblock %}
