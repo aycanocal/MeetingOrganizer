@@ -18,7 +18,7 @@ Initialize and activate a virtual environment.
 
 If virtualenv is not installed : `$ pip install virtualenv`
 
-`$ virtualenv --no-site-packages env`
+`$ virtualenv env`
 
 `$ source env/bin/activate`
 
