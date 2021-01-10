@@ -12,15 +12,15 @@ Python Flask, MySQL, SQLAlchemy, HTML, JavaScript,
 
 ### Install
 
-Make sure Python3 and pip are installed.
+Make sure Python3, pip are installed.
 
-Activate virtual environment.
+Initialize and activate a virtual environment.
 
-`$ source venv/bin/activate`
+If virtualenv is not installed : `$ pip install virtualenv`
 
-Deactivate virtual environment.
+`$ virtualenv --no-site-packages env`
 
-`(venv) $ deactivate`
+`$ source env/bin/activate`
 
 Install dependencies/packages
 
@@ -28,7 +28,7 @@ Install dependencies/packages
 
 ### Run
 
-`(venv) $ python App.py`
+`(env) $ python App.py`
 
 Go to http://127.0.0.1:5000/ on your browser.
 
