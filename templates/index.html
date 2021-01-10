@@ -4,7 +4,32 @@
 
 {% block content %}
 
-<h1> Meetings </h1>
+<h1 xmlns="http://www.w3.org/1999/html"> Meetings </h1>
+
+<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addModal">
+  Add New Meeting
+</button>
+
+{% with messages = get_flashed_messages() %}
+
+{% if messages %}
+
+    {% for message in messages %}
+
+      <div class="alert alert-success alert-dismissable" role="alert">
+
+        <button type="button" class="close" data-dismiss="alert" aria-label="close">
+          <span aria-hidden="true">x</span>
+        </button>
+
+        {{ message }}
+      </div>
+
+    {% endfor %}
+
+  {% endif %}
+
+{% endwith %}
 
 <table class="table table-striped">
   <tr>
@@ -20,7 +45,7 @@
     <td>{{row.topic}}</td>
     <td>{{row.date}}</td>
     <td>{{row.startHour}}</td>
-    <td>{{row.finishHour}}</td>
+    <td>{{row.endHour}}</td>
     <td>{{row.participants}}</td>
     <td>
       <a href="/update/{{row.id}}" class="btn btn-warning btn-xs" data-toggle="modal" data-target="#editModal{{row.id}}">Edit</a>
@@ -37,23 +62,21 @@
       </div>
       <div class="modal-body">
         <form action="{{url_for('update')}}" method="post">
-
           <input type="hidden" name="id" value="{{row.id}}"><br>
-
           <label>Topic:</label><br>
-          <input type="text" name="topic" value="{{row.topic}}"><br>
+          <input class="form-control" type="text" name="topic" value="{{row.topic}}" required><br>
 
           <label>Date:</label><br>
-          <input type="date" name="date" value="{{row.date}}"><br>
+          <input class="form-control" id="edit_date" type="date" name="date" value="{{row.date}}" required><br>
 
           <label>Start Hour:</label><br>
-          <input type="time" name="startHour" value="{{row.startHour}}"><br>
+          <input class="form-control" type="time" name="startHour" value="{{row.startHour}}" required><br>
 
-          <label>Finish Hour:</label><br>
-          <input type="time" name="finishHour" value="{{row.finishHour}}"><br>
+          <label>End Hour:</label><br>
+          <input class="form-control" type="time" name="endHour" value="{{row.endHour}}" required><br>
 
           <label>Participants:</label><br>
-          <input type="text" name="participants" value="{{row.participants}}"><br><br>
+          <input class="form-control" type="text" name="participants" value="{{row.participants}}" required><br><br>
 
           <button type="submit" class="btn btn-primary">Update</button>
         </form>
@@ -69,10 +92,6 @@
   {% endfor %}
 </table>
 
-<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addModal">
-  Add New Meeting
-</button>
-
 <!-- Add Modal -->
 <div class="modal fade" id="addModal" tabindex="-1" role="dialog">
   <div class="modal-dialog" role="document">
@@ -84,19 +103,19 @@
         <form action="{{url_for('add')}}" method="post">
 
           <label>Topic:</label><br>
-          <input type="text" name="topic"><br>
+          <input class="form-control" type="text" name="topic" required><br>
 
           <label>Date:</label><br>
-          <input type="date" name="date"><br>
+          <input class="form-control" id="add_date" type="date" name="date" required><br>
 
           <label>Start Hour:</label><br>
-          <input type="time" name="startHour"><br>
+          <input class="form-control" type="time" name="startHour" required><br>
 
-          <label>Finish Hour:</label><br>
-          <input type="time" name="finishHour"><br>
+          <label>End Hour:</label><br>
+          <input class="form-control" type="time" name="endHour" required><br>
 
           <label>Participants:</label><br>
-          <input type="text" name="participants"><br><br>
+          <input class="form-control" type="text" name="participants" required><br><br>
 
           <button type="submit" class="btn btn-primary">Add</button>
         </form>
@@ -108,6 +127,25 @@
   </div>
 </div>
 
+<script>
+  var today = new Date();
+  var dd = today.getDate();
+  var mm = today.getMonth()+1; //January is 0!
+  var yyyy = today.getFullYear();
 
+  if(dd<10){
+       dd='0'+dd
+  }
+  if(mm<10){
+       mm='0'+mm
+  }
+
+  today = yyyy+'-'+mm+'-'+dd;
+
+  document.getElementById("add_date").setAttribute("min", today);
+  if(document.getElementById("edit_date")!=null)
+     document.getElementById("edit_date").setAttribute("min", today);
+
+</script>
 
 {% endblock %}
