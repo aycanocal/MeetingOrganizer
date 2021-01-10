@@ -36,7 +36,7 @@
     <th>Topic</th>
     <th>Date</th>
     <th>Start Hour</th>
-    <th>Finish Hour</th>
+    <th>End Hour</th>
     <th>Participants</th>
     <th>Actions</th>
   </tr>
@@ -70,10 +70,10 @@
           <input class="form-control" id="edit_date" type="date" name="date" value="{{row.date}}" required><br>
 
           <label>Start Hour:</label><br>
-          <input class="form-control" type="time" name="startHour" value="{{row.startHour}}" required><br>
+          <input class="form-control" id="edit_start" type="time" onchange="setEditHours()" name="startHour" value="{{row.startHour}}" required><br>
 
           <label>End Hour:</label><br>
-          <input class="form-control" type="time" name="endHour" value="{{row.endHour}}" required><br>
+          <input class="form-control" id="edit_end" type="time" name="endHour" min={{row.startHour}} value="{{row.endHour}}" required><br>
 
           <label>Participants:</label><br>
           <input class="form-control" type="text" name="participants" value="{{row.participants}}" required><br><br>
@@ -109,10 +109,10 @@
           <input class="form-control" id="add_date" type="date" name="date" required><br>
 
           <label>Start Hour:</label><br>
-          <input class="form-control" type="time" name="startHour" required><br>
+          <input class="form-control" id="add_start" onchange="setAddHours()" type="time" name="startHour" required><br>
 
           <label>End Hour:</label><br>
-          <input class="form-control" type="time" name="endHour" required><br>
+          <input class="form-control" id="add_end" type="time" name="endHour" required><br>
 
           <label>Participants:</label><br>
           <input class="form-control" type="text" name="participants" required><br><br>
@@ -146,6 +146,16 @@
   if(document.getElementById("edit_date")!=null)
      document.getElementById("edit_date").setAttribute("min", today);
 
+  function setAddHours() {
+  var add_start = document.getElementById("add_start").value;
+  document.getElementById("add_end").setAttribute("min", add_start);
+  }
+
+  function setEditHours() {
+  var edit_start = document.getElementById("edit_start").value;
+  document.getElementById("edit_end").setAttribute("min", edit_start);
+
+}
 </script>
 
 {% endblock %}
