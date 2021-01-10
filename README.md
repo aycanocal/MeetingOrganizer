@@ -4,7 +4,7 @@ An app to create and organize meetings
 
 ## Technologies Used
 
-Python Flask, MySQL, SQLAlchemy, HTML, JavaScript, 
+Python Flask, MySQL, SQLAlchemy, HTML, JavaScript, Bootstrap
 
 ### Checkout
 
